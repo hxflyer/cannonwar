@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/gbox_comment_retry"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#F2F2F2"
+    android:clickable="true" >
+
+    <ImageView
+        android:id="@+id/gbox_comment_retry_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="37dp"
+        android:background="@drawable/qihoo_no_net"
+        android:contentDescription="@string/qihoo_desc" />
+
+    <TextView
+        android:id="@+id/gbox_comment_retry_tips"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="130dp"
+        android:gravity="center"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/qihoo_error_tips"
+        android:textColor="#666664"
+        android:textSize="16.0dip" />
+
+    <TextView
+        android:id="@+id/gbox_comment_retry_tips2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="top|center_horizontal"
+        android:layout_marginTop="158dp"
+        android:gravity="center"
+        android:text="@string/qihoo_error_retry"
+        android:textColor="#333333"
+        android:textSize="16.0dip" />
+
+</FrameLayout>

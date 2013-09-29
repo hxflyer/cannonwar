@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/top_friend_item_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="60dp"
+    android:background="@android:color/white" >
+
+    <FrameLayout
+        android:id="@+id/friend_num"
+        android:layout_width="40dp"
+        android:layout_height="fill_parent" >
+
+        <ImageView
+            android:id="@+id/top1"
+            android:layout_width="30dp"
+            android:layout_height="34dp"
+            android:layout_gravity="center"
+            android:src="@drawable/qihoo_top1" />
+
+        <ImageView
+            android:id="@+id/top2"
+            android:layout_width="30dp"
+            android:layout_height="34dp"
+            android:layout_gravity="center"
+            android:src="@drawable/qihoo_top2" />
+
+        <ImageView
+            android:id="@+id/top3"
+            android:layout_width="30dp"
+            android:layout_height="34dp"
+            android:layout_gravity="center"
+            android:src="@drawable/qihoo_top3" />
+
+        <com.qihoo.gamecenter.sdk.plugin.modules.friendlist.TextView
+            android:id="@+id/numTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/qihoo_common_text_color"
+            android:textSize="12dp" />
+
+        <View
+            android:id="@+id/MyView"
+            android:layout_width="3dp"
+            android:layout_height="fill_parent"
+            android:background="#FF9833" />
+
+    </FrameLayout>
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+
+            <ImageView
+                android:id="@+id/headshot"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="8dp"
+                android:contentDescription="@null"
+                android:paddingBottom="6dp"
+                android:paddingLeft="6dp"
+                android:paddingRight="5.3dp"
+                android:paddingTop="5.3dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/qihoo_avatar_default" />
+
+            <ImageView
+                android:id="@+id/headshot_mark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/headshot"
+                android:layout_alignLeft="@+id/headshot"
+                android:layout_alignRight="@+id/headshot"
+                android:layout_alignTop="@+id/headshot"
+                android:layout_centerVertical="true"
+                android:contentDescription="@null"
+                android:scaleType="fitXY"
+                android:src="@drawable/qihoo_avatar_fb" />
+
+            <com.qihoo.gamecenter.sdk.plugin.modules.friendlist.TextView
+                android:id="@+id/friend_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="9dp"
+                android:layout_toRightOf="@+id/headshot"
+                android:ellipsize="marquee"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:marqueeRepeatLimit="marquee_forever"
+                android:singleLine="true"
+                android:textColor="#FF666666"
+                android:textSize="16dp" >
+
+                <requestFocus />
+            </com.qihoo.gamecenter.sdk.plugin.modules.friendlist.TextView>
+
+            <com.qihoo.gamecenter.sdk.plugin.modules.friendlist.TextView
+                android:id="@+id/friend_score"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#FF666666"
+                android:textSize="12dp"
+                android:layout_toRightOf="@+id/headshot"
+                android:layout_below="@+id/friend_name" />
+        </RelativeLayout>
+
+</LinearLayout>

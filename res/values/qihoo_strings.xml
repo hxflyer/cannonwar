@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+	<string name="qihoo_invite_friend_search_hit">搜索好友</string>
+	<string name="qihoo_invite_friend_notfound">神马都没有搜到哦~</string>
+	<string name="qihoo_desc">360GameCenter</string>
+	<string name="qihoo_error_tips">网络不给力，请稍后再试！</string>
+	<string name="qihoo_error_retry">轻触刷新</string>
+	<string name="qihoo_Downloading">正在努力加载中&#8230;&#8230;</string>
+	<string name="qihoo_privilege_no_trace">您什么足迹都没有留下&#8230;</string>
+	<string name="qihoo_privilege_no_alarm">您还没有设定您的提醒闹钟&#8230;</string>
+	<string name="qihoo_profile_no_classic_privilege">您手机中安装的游戏没有特权</string>
+	<string name="qihoo_profile_no_all_privilege"><![CDATA[亲爱的骨灰玩家，快去<font color="#6DAA2E"><u>“精选特权”</u></font>里查看您的所有特权吧]]></string>
+	<string name="qihoo_privilege_no_account">账户系统正在筹建中，敬请期待&#8230;</string>
+	<string name="qihoo_no_sdcard">您还没有SD卡，安装了SD卡后才可以更换头像哦亲！</string>
+	<string name="qihoo_invite_friend_section_otherfriend">来自其他游戏</string>
+	<string name="qihoo_invite_friend_section_contact">来自通讯录（邀请将以短信发出）</string>
+	<string name="qihoo_invite_contact_invited">已邀请</string>
+	<string name="qihoo_invite_contact_invite">邀请</string>
+	<string name="qihoo_about_dialog_iknow">我知道了</string>
+	<string name="qihoo_about_dialog_cancel">取消</string>
+	<string name="qihoo_about_dialog_ok">确定</string>
+	<string name="qihoo_invite_friend_send_SMS_message">即将发送一条邀请短信，短信产生的费用由运营商收取。</string>
+	<string name="qihoo_alert_title">温馨提示</string>
+	<string name="qihoo_invite_friend_send_SMS_check">下次不再提示</string>
+	<string name="qihoo_Ok">确定</string>
+    <string name="qihoo_Cancel">取消</string>
+    <string name="qihoo_invite_contact_loading_tip">正在搜索</string>
+    <string name="qihoo_message_get_friend_from_txl">邀请通讯录好友</string>
+    <string name="qihoo_invite_friend_message_number_top">好友数量已达上限，无法继续添加</string>
+    <string name="qihoo_invite_friend_contact_load_error">通讯录读取失败，请重试</string>
+    <string name="qihoo_not_login_title">您还没有登录，不能查看排行</string>
+    <string name="qihoo_not_login_title_invite">您还没有登录，不能邀请好友</string>
+    <string name="qihoo_not_login_click">点击登录</string>
+    <string name="qihoo_AfterRetryMessge">网络不给力，请稍后刷新</string>
+    <string name="qihoo_game_friend_score"><![CDATA[最高:<font color="#ff9833">%s</font>]]></string>
+    <string name="qihoo_common_me">我</string>
+</resources>

@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/qihoo_activity_bg_gray"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/searcharea"
+        android:layout_width="fill_parent"
+        android:layout_height="32dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="6dp"
+        android:layout_marginRight="6dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/qihoo_invite_search_bg" 
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:src="@drawable/qihoo_title_search_icon" />
+
+        <EditText
+            android:id="@+id/searchText"
+            android:layout_width="0dp"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:background="@color/qihoo_transparent"
+            android:singleLine="true"
+            android:textColor="@color/qihoo_black"
+            android:hint="@string/qihoo_invite_friend_search_hit"
+            android:textSize="14dp" >
+
+            <requestFocus />
+        </EditText>
+
+        <ImageView
+            android:id="@+id/clearbutton"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_gravity="center"
+            android:layout_marginRight="6dp"
+            android:visibility="gone"
+            android:src="@drawable/qihoo_title_search_delete" >
+        </ImageView>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" >
+
+        <!-- android:overScrollFooter="@null" -->
+        <ListView
+            android:id="@+id/listview"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@color/qihoo_list_divider"
+            android:dividerHeight="0.6dp"
+            android:visibility="gone"
+            android:fadingEdge="none">
+        </ListView>
+
+        <TextView
+            android:id="@+id/PY"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="56dp"
+            android:background="@drawable/qihoo_py_bg"
+            android:drawablePadding="20dp"
+            android:gravity="center"
+            android:textColor="@color/qihoo_white"
+            android:textSize="36dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/blank_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="44dp"
+            android:drawablePadding="20dp"
+            android:drawableTop="@drawable/qihoo_tab_play_blank_icon"
+            android:text="@string/qihoo_invite_friend_notfound"
+            android:textColor="@color/qihoo_common_text_color"
+            android:textSize="14dp"
+            android:visibility="gone" />
+
+        <include layout="@layout/qihoo_gbox_online_loading_layout" />
+        
+        <RelativeLayout
+            android:id="@+id/not_login_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#E5E5E5"
+            android:visibility="gone" >
+
+            <TextView
+                android:id="@+id/blank_tip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="136.6dp"
+                android:drawablePadding="20dp"
+                android:drawableTop="@drawable/qihoo_tab_play_blank_icon"
+                android:gravity="center_horizontal"
+                android:text="@string/qihoo_not_login_title_invite"
+                android:textColor="@color/qihoo_common_text_color"
+                android:textSize="14dp" />
+        </RelativeLayout>
+
+    </FrameLayout>
+
+</LinearLayout>

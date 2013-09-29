@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.qihoo.gamecenter.sdk.plugin.modules.friendlist.controls.OnlineLoadingView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/online_loading_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/qihoo_activity_bg"
+    android:visibility="gone" >
+
+    <include layout="@layout/qihoo_gbox_no_content_or_network" />
+
+    <LinearLayout
+        android:id="@+id/online_loading"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.33" >
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/LinearLayout1"
+            android:layout_width="fill_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="0dp"
+            android:layout_weight="0.67"
+            android:gravity="center" >
+
+            <com.qihoo.gamecenter.sdk.plugin.modules.friendlist.controls.LoadingProgressView
+                android:id="@+id/gbox_loading_bar"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+            </com.qihoo.gamecenter.sdk.plugin.modules.friendlist.controls.LoadingProgressView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.qihoo.gamecenter.sdk.plugin.modules.friendlist.controls.OnlineLoadingView>

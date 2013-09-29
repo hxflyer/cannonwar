@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/qihoo_activity_bg_gray" >
+
+    <!-- android:overScrollFooter="@null" -->
+    <ListView
+        android:id="@+id/list"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/sortSwitcher"
+        android:layout_below="@+id/user_info_layout"
+        android:background="@android:color/transparent"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="1dp"
+        android:fadingEdge="none"
+        android:listSelector="@android:color/transparent"
+        
+        android:paddingLeft="6dp"
+        android:paddingRight="6dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:scrollbars="vertical" >
+
+    </ListView>
+
+    <ImageView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/qihoo_list_top_shadow" />
+
+    <RelativeLayout
+        android:id="@+id/not_login_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#E5E5E5"
+        android:visibility="gone" >
+
+        <TextView
+            android:id="@+id/blank_tip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="136.6dp"
+            android:drawablePadding="20dp"
+            android:drawableTop="@drawable/qihoo_tab_play_blank_icon"
+            android:gravity="center_horizontal"
+            android:text="@string/qihoo_not_login_title"
+            android:textColor="@color/qihoo_common_text_color"
+            android:textSize="14dp" />
+
+        <!-- 
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/blank_tip"
+            android:layout_centerHorizontal="true"
+            android:text="@string/qihoo_not_login_click"
+            android:textColor="#FF9600"
+            android:textSize="14dp" />
+         -->
+        
+    </RelativeLayout>
+
+    <include
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        layout="@layout/qihoo_gbox_online_loading_layout" />
+
+</RelativeLayout>

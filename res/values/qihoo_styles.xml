@@ -1,0 +1,69 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <style name="qihoo_gbox_progress_text">
+        <item name="android:textSize">14dip</item>
+        <item name="android:textColor">@color/qihoo_progress_text_color</item>
+    </style>
+    
+    <style name="qihoo_custom_dialog_title">
+        <item name="android:textSize">16dip</item>
+        <item name="android:textColor">#FF7F16</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginBottom">11.3dp</item>
+        <item name="android:lineSpacingExtra">0dip</item>
+        <item name="android:includeFontPadding">false</item>
+    </style>
+    
+    <style name="qihoo_custom_dialog_title_divider">
+        <item name="android:background">#FFB273</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">2dp</item>
+    </style>
+    
+    <style name="qihoo_custom_dialog_msg_margin">
+        <item name="android:layout_marginTop">14dp</item>
+        <item name="android:layout_marginLeft">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:layout_marginBottom">21.3dp</item>
+    </style>
+    
+    <style name="qihoo_custom_dialog_msg">
+        <item name="android:textSize">14dip</item>
+        <item name="android:textColor">#FF000000</item>
+        <item name="android:lineSpacingExtra">3dip</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="android:gravity">top</item>
+    </style>
+    
+    <style name="qihoo_custom_dialog_bg">
+        <item name="android:paddingTop">15.3dp</item>
+        <item name="android:paddingBottom">21.3dp</item>
+        <item name="android:paddingLeft">12.6dip</item>
+        <item name="android:paddingRight">12.6dip</item>
+        <item name="android:background">@drawable/qihoo_dialog_bg</item>
+    </style>
+    
+    <style name="qihoo_custom_dialog_btn">
+        <item name="android:textSize">14dip</item>
+        <item name="android:textColor">@color/qihoo_custom_dialog_btn_text_color</item>
+    </style>
+    
+    <style name="qihoo_AppBaseTheme" parent="android:Theme.Light">
+    </style>
+    
+    <style name="qihoo_CustomTitleActivityTitleBackground">
+        <item name="android:background">@drawable/qihoo_activity_title_bg</item>
+    </style>
+    
+    <style name="qihoo_CustomTitleActivity" parent="qihoo_AppBaseTheme">
+        <item name="android:windowTitleSize">@dimen/qihoo_activity_title_height</item>
+        <item name="android:windowTitleBackgroundStyle">@style/qihoo_CustomTitleActivityTitleBackground</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+    
+</resources>

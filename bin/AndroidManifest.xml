@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.hx.cannonwar"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="8" />
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <!-- 添加 360SDK 必需要的权限。 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.WRITE_SMS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <activity
+            android:name="com.hx.cannonwar.TankGame"
+            android:screenOrientation="landscape" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" >
+                </category>
+            </intent-filter>
+        </activity>
+        <!-- 添加 360SDK 必需的 activity:com.qihoo.gamecenter.sdk.buildin.activity.ContaierActivity -->
+        <activity
+            android:name="com.qihoo.gamecenter.sdk.buildin.activity.ContainerActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <!-- 添加 360SDK 必需的 activity:com.qihoopay.insdk.activity.RemoteContainerActivity -->
+        <activity
+            android:name="com.qihoopay.insdk.activity.RemoteContainerActivity"
+            android:configChanges="orientation|keyboardHidden|navigation"
+            android:process=":remote"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+
+        <!-- 添加 360SDK 必须的 receiver, 用于消息服务 -->
+        <receiver android:name="com.qihoo.gamecenter.sdk.plugin.receiver.ScheduleReceiver" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.qihoo.gamecenter.sdk.plugin.scheduletask.action.response_message" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.qihoo.gamecenter.sdk.plugin.scheduletask.action.check_message" />
+            </intent-filter>
+        </receiver>
+        <!-- 添加 360SDK 必需的 meta-data:QIHOO_SDK_APPKEY。此处 value 为 app_key。请在 360 应用开放平台 http://open.app.360.cn/?from=open_dt 注册申请 app_key 和 app_secret -->
+        <meta-data
+            android:name="QIHOO_SDK_APPKEY"
+            android:value="0062fd5e49f631fcf02c3f660ac87e86" >
+        </meta-data>
+        <!-- 添加 360SDK 可选的 meta-data:QIHOO_SDK_CHANNEL。此处 value 由应用方自定义,用于标识应用方的子渠 道。 -->
+        <meta-data
+            android:name="QIHOO_SDK_CHANNEL"
+            android:value="Default" >
+        </meta-data>
+        <!-- 添加 360SDK 必需的 meta-data:QIHOO_SDK_APPID。如无此信息,提交应用审批时将无法通过 -->
+        <meta-data
+            android:name="QIHOO_SDK_APPID"
+            android:value="200786751" >
+        </meta-data>
+
+        <activity
+            android:name="com.zhou.tank.ShareToFriendActivity"
+            android:label="@string/title_activity_share_to_friend" >
+        </activity>
+    </application>
+
+</manifest>

@@ -1,0 +1,67 @@
+﻿<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/RefreshLayout"
+    android:layout_width="fill_parent"
+    android:layout_height="62dp"
+    android:orientation="horizontal" >
+
+    <FrameLayout
+        android:id="@+id/RefreshProgress"
+        android:layout_width="fill_parent"
+        android:layout_height="62dp" >
+
+        <FrameLayout
+            android:id="@+id/FrameLayout1"
+            android:layout_width="162dp"
+            android:layout_height="62dp"
+            android:layout_gravity="center"
+            android:paddingBottom="2dip"
+            android:paddingRight="10dip"
+            android:paddingTop="2dip" >
+
+            <ProgressBar
+                android:id="@+id/RefreshBar"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="0dp"
+                android:indeterminateDrawable="@anim/qihoo_progressbar"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="65dp"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginRight="0dp"
+                android:layout_marginTop="0dp"
+                android:gravity="center_vertical"
+                android:text="@string/qihoo_Downloading"
+                android:singleLine="true"
+                android:textColor="#333333"
+                android:textSize="14dp" />
+
+        </FrameLayout>
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/RefreshRetry"
+        android:layout_width="fill_parent"
+        android:layout_height="62dp" >
+
+        <Button
+            android:id="@+id/RetryBtn"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/qihoo_btn_common_gray_bg"
+            android:text="@string/qihoo_AfterRetryMessge"
+            android:textColor="@color/qihoo_critique_text_color"
+            android:textSize="@dimen/qihoo_app_primary_title_size" />
+
+    </FrameLayout>
+
+</LinearLayout>

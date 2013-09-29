@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="qihoo_activity_bg_gray">#FFE5E5E5</color>
+	<color name="qihoo_transparent">#00000000</color>
+	<color name="qihoo_black">#000000</color>
+	<color name="qihoo_list_divider">#FFDEDEDE</color>
+	<color name="qihoo_white">#FFFFFFFF</color>
+	<color name="qihoo_common_text_color">#FF666666</color>
+	<color name="qihoo_activity_bg">#FFFFFFFF</color>
+	<color name="qihoo_progress_text_color">#ba7b00</color>
+	<color name="qihoo_top_app_listview_down">#FFE9CE</color>
+	<color name="qihoo_invite_friend_disable">#FF999999</color>
+    <color name="qihoo_invite_friend_enable">#FFFFFFFF</color>
+    <color name="qihoo_custom_dialog_btn_text_color">#fff</color>
+</resources>

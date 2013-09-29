@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:id="@+id/custom_title">
+
+    <ImageView
+        android:id="@+id/custom_preference_activity_title_imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:paddingLeft="12dp"
+        android:contentDescription="@null"
+        android:scaleType="centerInside"
+        android:src="@drawable/qihoo_btn_back_drawable" />
+
+    <TextView
+        android:id="@+id/custom_preference_activity_title_textView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/qihoo_activity_title_text_margin_left"
+        android:paddingRight="@dimen/qihoo_activity_title_text_margin_right"
+        android:ellipsize="middle"
+        android:gravity="center"
+        android:includeFontPadding="true"
+        android:lineSpacingExtra="0dp"
+        android:singleLine="true"
+        android:textColor="@color/qihoo_common_text_color"
+        android:textSize="20dip"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:id="@+id/custom_preference_activity_title_widgetView1"
+        android:layout_width="wrap_content"
+        android:layout_height="fill_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_vertical"
+        android:visibility="gone" >
+    </LinearLayout>
+
+</RelativeLayout>
