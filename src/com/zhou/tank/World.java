@@ -216,8 +216,8 @@ public class World implements MapListener {
 				if(enemyTanks[i].isLive){
 					explodes[i].isLive = true;
 					enemyTanks[i].isLive = false;		
-					totalScore += (Setting.level-1)*20+100;
-					levelScore += (Setting.level-1)*20+100;
+					totalScore += (Setting.level-1)*20+200;
+					levelScore += (Setting.level-1)*20+200;
 				}
 			}
 			movingTankNum = 0;
@@ -275,8 +275,8 @@ public class World implements MapListener {
 						} else {
 							enemy.changeType(enemy.tank_type - b.bullet_strength);
 						}
-						totalScore += (Setting.level-1)*20+100;
-						levelScore += (Setting.level-1)*20+100;
+						totalScore += (Setting.level-1)*20+200;
+						levelScore += (Setting.level-1)*20+200;
 					}
 				}
 				if (enemy.bullet.isLive) {
