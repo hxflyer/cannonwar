@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
@@ -65,7 +66,6 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
 	private boolean mIsInOffline = false;
 	public boolean isLoggedIn = false;
 
-	public String loginNextIntent;
     // ---------------------------------调用360SDK接口------------------------------------
     /**
      * 使用360SDK的登录接口
@@ -77,6 +77,7 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
     public void doSdkLogin(boolean isLandScape, boolean isBgTransparent, String clientId) {
         doSdkLogin(isLandScape,isBgTransparent,clientId,true);
     }
+    
 
     /**
      * 使用360SDK的登录接口
@@ -171,14 +172,6 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
             Log.d(TAG, "mLoginCallback, data is " + data);
             String authorizationCode = parseAuthorizationCode(data);
             onGotAuthorizationCode(authorizationCode);
-            if(authorizationCode!=null){
-	            if(loginNextIntent=="inviteFriend"){
-	            	Game.instance.showInviteFriendPopup();
-	            }else if(loginNextIntent=="showList"){
-	            	Game.instance.showFriendsRank();
-	            }
-            }
-            loginNextIntent = null;
         }
     };
     
@@ -624,8 +617,17 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
             
             @Override
             public void onFinished(String data) {
-                Toast.makeText(SdkUserBaseActivity.this, data, Toast.LENGTH_LONG).show();
-                System.out.println(data);
+            	try {
+					JSONObject jsonObj = new JSONObject(data);
+					Boolean isAutoLoginOk = jsonObj.getBoolean("autologin");
+					if(isAutoLoginOk){
+						doSdkLogin(true, false, Game.APPKEY);
+					}
+				} catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+                
             }
         });
     }

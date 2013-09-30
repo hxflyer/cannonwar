@@ -59,7 +59,7 @@ public class World implements MapListener {
 			bonus[i] = new Bonus();
 		}
 		this.worldListener = worldListener;
-		playerLife = 2;
+		playerLife = 1;
 	}
 
 	public void initWorld(int level) {
@@ -132,7 +132,7 @@ public class World implements MapListener {
 		homeshow		= 0;
 		homeIsFeTime	= 0;
 		initWorld(1);
-		playerLife		= 2;
+		playerLife		= 1;
 		tickTimes[6]	= 0;
 	}
 	public void doSuccess(float deltaTime) {

@@ -32,6 +32,7 @@ public class MainMenuScreen extends Screen {
 	public MainMenuScreen(Game game) {
 		super(game);
 		type = "mainmenu";
+		
 	}
 	private int frozeTime = 0;
 	@Override
@@ -53,15 +54,20 @@ public class MainMenuScreen extends Screen {
 					
 				}else if(x>700 && y>400){
 					if(!game.isLoggedIn){
+						game.loginNextIntent = "showList";
 						game.doSdkLogin(true, false, Game.APPKEY);
 					}else{
 						game.showFriendsRank();
 					}
 				}else if(x>180 && x<620 && y>300 && y<450){
-					Screen gameScreen = ((TankGame)game).getGameScreen();
-					((GameScreen)gameScreen).reset();
-					game.setScreen(gameScreen);
-					
+					if(!game.isLoggedIn){
+						game.loginNextIntent = "startGame";
+						game.doSdkLogin(true, false, Game.APPKEY);
+					}else{
+						Screen gameScreen = ((TankGame)game).getGameScreen();
+						((GameScreen)gameScreen).reset();
+						game.setScreen(gameScreen);
+					}
 					
 				}
 				frozeTime = 30;

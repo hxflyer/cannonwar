@@ -103,6 +103,7 @@ public class GameScreen extends Screen {
 							if(game.isLoggedIn){
 								game.showShareScorePopup();
 							}else{
+								game.loginNextIntent = "shareScore";
 								game.doSdkLogin(true, false, Game.APPKEY);
 							}
 							frozeTime = 30;
@@ -117,11 +118,11 @@ public class GameScreen extends Screen {
 							frozeTime = 30;
 						}else if(y<440){
 							Log.d("tank","btn check list");
-							if(!game.isLoggedIn){
+							if(game.isLoggedIn){
+								game.showFriendsRank();
+							}else{
 								game.loginNextIntent = "showList";
 								game.doSdkLogin(true, false, Game.APPKEY);
-							}else{
-								game.showFriendsRank();
 							}
 							frozeTime = 30;
 						}

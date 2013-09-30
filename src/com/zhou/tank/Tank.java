@@ -10,8 +10,8 @@ public abstract class Tank extends ObjectCubo {
 															// stars,three stars
 															// or one pistol
 	public static final int[] player_lifes = { 1, 2, 2, 2 };
-	public static final int[] player_speed = { Setting.Tank_Fase_Speed,
-			Setting.Tank_Very_Fase_Speed, Setting.Tank_Very_Fase_Speed,
+	public static final int[] player_speed = { Setting.Tank_Mode_Speed,
+			Setting.Tank_Fase_Speed, Setting.Tank_Very_Fase_Speed,
 			Setting.Tank_Very_Fase_Speed };
 
 	public static final int[] enemy_type = { 0, 1, 2, 3};

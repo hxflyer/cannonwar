@@ -69,6 +69,7 @@ import com.qihoo.gamecenter.sdk.demo.utils.ProgressUtil;
 import com.qihoo.gamecenter.sdk.protocols.ProtocolConfigs;
 import com.qihoo.gamecenter.sdk.protocols.ProtocolKeys;
 import com.zhou.tank.Assets;
+import com.zhou.tank.GameScreen;
 
 public abstract class Game extends SdkUserBaseActivity  implements
 OnClickListener, TokenInfoListener, QihooUserInfoListener, AddFriendListener{
@@ -210,7 +211,9 @@ OnClickListener, TokenInfoListener, QihooUserInfoListener, AddFriendListener{
     public static String REFRESHTOKEN = "";
     public ProgressDialog mProgress;
     private PopupWindow pw = null;
-	private ListView friendList;
+
+	public String loginNextIntent;
+	
 	public void init360(Bundle savedInstanceState){
 		if (savedInstanceState == null) {
             // 传入横屏动画参数
@@ -221,24 +224,7 @@ OnClickListener, TokenInfoListener, QihooUserInfoListener, AddFriendListener{
                 }
             });
         }
-		LinearLayout view = new LinearLayout(this);
-    	friendList = new ListView(this);
-    	view.addView(friendList);
-    	friendList.setOnItemClickListener(new OnItemClickListener() {
-    		@Override
-    	    public void onItemClick(AdapterView<?> parent, View view,
-    	            int position, long id) {
-    			
-    	    }
-
-    	});
-        pw = new PopupWindow(Game.instance);  
-        pw.setContentView(view);
-        
-        pw.setWidth(500);
-        pw.setHeight(400);
-        pw.setFocusable(true);
-        pw.setOutsideTouchable(false);
+		this.doSdkCheckAutoLogin();
 	}
 	@Override
     public void onGotAuthorizationCode(String authorizationCode) {
@@ -272,20 +258,35 @@ OnClickListener, TokenInfoListener, QihooUserInfoListener, AddFriendListener{
 	
 	@Override
 	public void onGotUserInfo(QihooUserInfo userInfo) {
-		
-        if (userInfo != null && userInfo.isValid()) {
+		if(mProgress!=null){
+	        ProgressUtil.dismiss(mProgress);
+	    }
+	    mProgress =null;
+        
+	    if (userInfo != null && userInfo.isValid()) {
             // 保存QihooUserInfo
             mQihooUserInfo = userInfo;
             this.isLoggedIn = true;
+            if(loginNextIntent!=null){
+            	Log.d("tank", loginNextIntent);
+            }
             AddFriendTask.doAddFriendTask(this, mTokenInfo.getAccessToken(), true,Matrix.getAppKey(this), this);
+            if(loginNextIntent=="shareScore"){
+            	showShareScorePopup();
+            }else if(loginNextIntent=="inviteFriend"){
+            	showInviteFriendPopup();
+            }else if(loginNextIntent=="showList"){
+            	showFriendsRank();
+            }else if(loginNextIntent=="startGame"){
+            	Screen gameScreen = ((TankGame)this).getGameScreen();
+				((GameScreen)gameScreen).reset();
+				setScreen(gameScreen);
+            }
+            loginNextIntent = null;
         } else {
             Toast.makeText(this, "登录失败，请再试一次", Toast.LENGTH_LONG).show();
         }
-        if(mProgress!=null){
-        ProgressUtil.dismiss(mProgress);
         
-        mProgress =null;
-        }
 	}
 	
 	
@@ -343,25 +344,7 @@ OnClickListener, TokenInfoListener, QihooUserInfoListener, AddFriendListener{
         Log.d("tank", "file generate done");
 
     }
-	public void doPopup(String data){
-		try {
-			JSONObject jsonObj = new JSONObject(data);
-			JSONArray datas = jsonObj.getJSONArray("data");
-			String[] friendData = new String[datas.length()];
-			for(int i=0;i<datas.length();i++){
-				JSONObject fjson = datas.getJSONObject(i);
-				Log.d("tank",fjson.getString("nick"));
-				friendData[i] = fjson.getString("nick");
-				QihooFriendInfo userinfo = QihooFriendInfo.parseJsonObj(fjson);
-			}
-			friendList.setAdapter(new ArrayAdapter<String>(Game.this,android.R.layout.simple_list_item_1,friendData));  
-			
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		pw.showAtLocation(basicView, Gravity.CENTER, 0,0); 
-	}
+	
 	
 	public void showFriendsRank(){
 		doSdkDisplayGameFriendRank(mQihooUserInfo, mTokenInfo, true);

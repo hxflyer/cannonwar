@@ -53,7 +53,7 @@ public class TankGame extends Game{
 		// TODO Auto-generated method stub
 		
 		super.onStop();
-		Assets.unload();
+		//Assets.unload();
 	}
 
 
