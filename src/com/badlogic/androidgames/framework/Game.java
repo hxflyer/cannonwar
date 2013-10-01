@@ -1,47 +1,26 @@
 package com.badlogic.androidgames.framework;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
-import android.graphics.Canvas;
 import android.graphics.Bitmap.Config;
-import android.graphics.Color;
+import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
-import android.support.v4.view.ViewPager.LayoutParams;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.badlogic.androidgames.framework.Graphics.PixmapFormat;
@@ -51,13 +30,11 @@ import com.badlogic.androidgames.framework.impl.AndroidFileIO;
 import com.badlogic.androidgames.framework.impl.AndroidGraphics;
 import com.badlogic.androidgames.framework.impl.AndroidInput;
 import com.badlogic.androidgames.framework.impl.AndroidPixmap;
-import com.hx.cannonwar.R;
 import com.hx.cannonwar.TankGame;
 import com.qihoo.gamecenter.sdk.buildin.Matrix;
 import com.qihoo.gamecenter.sdk.common.IDispatcherCallback;
 import com.qihoo.gamecenter.sdk.demo.appserver.AddFriendListener;
 import com.qihoo.gamecenter.sdk.demo.appserver.AddFriendTask;
-import com.qihoo.gamecenter.sdk.demo.appserver.QihooFriendInfo;
 import com.qihoo.gamecenter.sdk.demo.appserver.QihooUserInfo;
 import com.qihoo.gamecenter.sdk.demo.appserver.QihooUserInfoListener;
 import com.qihoo.gamecenter.sdk.demo.appserver.QihooUserInfoTask;
@@ -66,13 +43,11 @@ import com.qihoo.gamecenter.sdk.demo.appserver.TokenInfoListener;
 import com.qihoo.gamecenter.sdk.demo.appserver.TokenInfoTask;
 import com.qihoo.gamecenter.sdk.demo.common.SdkUserBaseActivity;
 import com.qihoo.gamecenter.sdk.demo.utils.ProgressUtil;
-import com.qihoo.gamecenter.sdk.protocols.ProtocolConfigs;
-import com.qihoo.gamecenter.sdk.protocols.ProtocolKeys;
 import com.zhou.tank.Assets;
 import com.zhou.tank.GameScreen;
 
 public abstract class Game extends SdkUserBaseActivity  implements
-OnClickListener, TokenInfoListener, QihooUserInfoListener, AddFriendListener{
+	OnClickListener, TokenInfoListener, QihooUserInfoListener, AddFriendListener {
 	
 	public AndroidFastRenderView renderView;
 	public Graphics graphics;
@@ -93,9 +68,11 @@ OnClickListener, TokenInfoListener, QihooUserInfoListener, AddFriendListener{
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        
         basicView = new LinearLayout(this);
         setContentView(basicView);
-        boolean isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        boolean isLandscape = 
+        		getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
         int frameBufferWidth = isLandscape ? 800 : 480;
         int frameBufferHeight = isLandscape ? 480 : 800;
         Bitmap frameBuffer = Bitmap.createBitmap(frameBufferWidth,
@@ -130,7 +107,6 @@ OnClickListener, TokenInfoListener, QihooUserInfoListener, AddFriendListener{
         wakeLock.acquire();
         screen.resume();
         renderView.resume();
-        
     }
 
     @Override
@@ -203,7 +179,6 @@ OnClickListener, TokenInfoListener, QihooUserInfoListener, AddFriendListener{
 	/***************
 	 * 360 api
 	 * *************/
-	
 	public final static String APPKEY = "0062fd5e49f631fcf02c3f660ac87e86";
     public final static String APPID = "200786751";
     public final static String APPSEC = "5659112b11d501fb431dba3cc8082b40";

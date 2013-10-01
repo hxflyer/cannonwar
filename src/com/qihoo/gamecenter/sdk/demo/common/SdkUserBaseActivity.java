@@ -1,33 +1,18 @@
 
 package com.qihoo.gamecenter.sdk.demo.common;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Bitmap.Config;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.badlogic.androidgames.framework.Game;
-import com.hx.cannonwar.R;
 import com.hx.cannonwar.TankGame;
 import com.qihoo.gamecenter.sdk.buildin.Matrix;
 import com.qihoo.gamecenter.sdk.buildin.activity.ContainerActivity;
@@ -39,8 +24,6 @@ import com.qihoo.gamecenter.sdk.demo.appserver.TokenInfo;
 import com.qihoo.gamecenter.sdk.demo.utils.ProgressUtil;
 import com.qihoo.gamecenter.sdk.protocols.ProtocolConfigs;
 import com.qihoo.gamecenter.sdk.protocols.ProtocolKeys;
-import com.zhou.tank.Assets;
-import com.zhou.tank.Setting;
 
 /**
  * SdkUserBaseActivity这个基类，处理请求360SDK的登录和支付接口。
@@ -94,6 +77,19 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
         Matrix.invokeActivity(this, intent, mLoginCallback);
     }
     
+    /**
+    * 使用 360SDK 的登录接口
+    * @param isLandScape 是否横屏显示登录界面
+    * @param isBgTransparent 是否以透明背景显示登录界面 
+    * @param clientId 即 AppKey
+    * @param isShowCloseIcon 是否显示关闭按钮 默认 true 
+    */
+    public void doSdkLoginSupportOffline(boolean isLandScape, boolean isBgTransparent, String clientId,boolean isShowCloseIcon) {
+	    mIsInOffline = false;
+	    Intent intent = getLoginIntent(isLandScape, isBgTransparent, clientId,isShowCloseIcon, true);
+	    Matrix.invokeActivity(this, intent, mLoginCallbackSupportOffline);
+    }
+    
 
     // -----------------------------------参数Intent-------------------------------------
 
@@ -107,7 +103,8 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
      * @param isSupportOffline 是否支持离线模式
      * @return Intent
      */
-    private Intent getLoginIntent(boolean isLandScape, boolean isBgTransparent, String clientId,boolean isShowCloseIcon, boolean isSupportOffline) {
+    private Intent getLoginIntent(boolean isLandScape, boolean isBgTransparent, 
+    		String clientId, boolean isShowCloseIcon, boolean isSupportOffline) {
 
         Intent intent = new Intent(this, ContainerActivity.class);
 
@@ -160,7 +157,9 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
 
     // ---------------------------------360SDK接口的回调-----------------------------------
 
-    // 登录、注册的回调
+    /**
+     *  登录、注册的回调
+     */
     private IDispatcherCallback mLoginCallback = new IDispatcherCallback() {
 
         @Override
@@ -175,7 +174,60 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
         }
     };
     
+	/**
+	 * 离线模式登录、注册的回调
+	 */
+	private IDispatcherCallback mLoginCallbackSupportOffline = new IDispatcherCallback() {
 
+		@Override
+		public void onFinished(String data) {
+			// press back
+			if (data == null) {
+				return;
+			}
+			Log.d(TAG, "mLoginCallbackSupportOffline, data is " + data);
+			try {
+				JSONObject joRes = new JSONObject(data);
+				JSONObject joData = joRes.getJSONObject("data");
+				String mode = joData.optString("mode", "");
+				if (!TextUtils.isEmpty(mode) && mode.equals("offline")) {
+					Toast.makeText(SdkUserBaseActivity.this,
+						"login success in offline mode", Toast.LENGTH_SHORT).show();
+					mIsInOffline = true;
+					mTokenInfo = new TokenInfo();
+					mQihooUserInfo = new QihooUserInfo();
+					/*
+					 * 离线模式下,直接调用 addfriend 接口, 可以总该接口返回的数据中尝试获叏离线登录用户的昵称和 QID
+					 */
+					AddFriendTask.doAddFriendTask(SdkUserBaseActivity.this,
+							null, false, Game.APPKEY, new AddFriendListener() {
+						@Override
+						public void onAddFriendTaskResult(
+								String strResult) {
+							Toast.makeText(SdkUserBaseActivity.this,
+									strResult, Toast.LENGTH_LONG)
+									.show();
+							// 从数据中拿到 nick 和 qid
+							try {
+								JSONObject joRes = new JSONObject(strResult);
+								JSONObject jodata = joRes.getJSONObject("data");
+								String qid = jodata.optString("qid", "");
+								String nick = jodata.optString("nick", "");
+								mQihooUserInfo.setId(qid);
+								mQihooUserInfo.setNick(nick);
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+					});
+				} else {
+					mLoginCallback.onFinished(data);
+				}
+			} catch (Exception e) {
+				Log.e(TAG, "mLoginCallbackSupportOffline exception", e);
+			}
+		}
+	};
     
     /**
      * 从Json字符中获取授权码
@@ -250,7 +302,7 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
             
             @Override
             public void onFinished(String data) {
-                //Toast.makeText(SdkUserBaseActivity.this, data, Toast.LENGTH_SHORT).show();
+                Toast.makeText(SdkUserBaseActivity.this, data, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -444,9 +496,63 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
         return intent;
     }
     
-
+    //--------------获取新浪微博好友接口--------------
+    public void doSdkGetSinaWeiboFriendList(QihooUserInfo userInfo, final TokenInfo tokenInfo,
+    		boolean bLannScape) {
+    	if(!checkLoginInfo(userInfo)) {
+            return;
+        }
+    	// 判断微博绑定关系
+    	Intent intent = getCheckBindSinaWeiboIntent(userInfo, tokenInfo, bLannScape);
+    	Matrix.execute(this, intent, new IDispatcherCallback() {
+			
+			@Override
+			public void onFinished(String data) {
+				if (data == null) {
+					return ;
+				}
+				try {
+					JSONObject result = new JSONObject(data);
+					if ("0".equals(result.optString("errno"))) {
+						JSONObject content = result.optJSONObject("data");
+						if (content != null && "1".equals(content.optString("status"))) {
+							// 获取微博好友列表
+							Intent intentWeibo = getGetSinaWeiboFriendListIntent(tokenInfo);
+							Matrix.execute(SdkUserBaseActivity.this, intentWeibo, new IDispatcherCallback() {
+								
+								@Override
+								public void onFinished(String data) {
+									Toast.makeText(SdkUserBaseActivity.this, data, Toast.LENGTH_SHORT).show();
+								}
+							});
+						} else {
+							Toast.makeText(SdkUserBaseActivity.this, data, Toast.LENGTH_SHORT).show();
+						}
+					} else {
+						Toast.makeText(SdkUserBaseActivity.this, data, Toast.LENGTH_SHORT).show();
+					}
+				} catch(Exception e) {
+					
+				}
+			}
+		});
+    }
     
- // ------------------注销登录----------------
+    private Intent getGetSinaWeiboFriendListIntent(TokenInfo tokenInfo) {
+    	Intent intent = new Intent();
+    	/*
+         * 必须参数：
+         *  function_code : 必须参数，表示要执行的操作
+         *  app_id : 必须参数，APP_KEY
+         *  access_token : 必须参数，用户的token
+        */
+    	intent.putExtra(ProtocolKeys.FUNCTION_CODE, ProtocolConfigs.FUNC_CODE_GET_SINAWEIBO_FRIEND_LIST);
+    	intent.putExtra(ProtocolKeys.APP_KEY, Matrix.getAppKey(this));
+    	intent.putExtra(ProtocolKeys.ACCESS_TOKEN, tokenInfo.getAccessToken());
+    	return intent;
+    }
+    
+    // ------------------注销登录----------------
     public void doSdkLogout(QihooUserInfo usrInfo){
     	isLoggedIn = false;
         if(!checkLoginInfo(usrInfo)) {
@@ -624,7 +730,6 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
 						doSdkLogin(true, false, Game.APPKEY);
 					}
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
                 
@@ -710,4 +815,94 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
         intent.putExtra(ProtocolKeys.APP_NAME, APPNAME);
         return intent;
     }
+    /**
+     * 使用 360SDK 的切换账号接口
+     * @param isLandScape 是否横屏显示登录界面
+     * @param isBgTransparent 是否以透明背景显示登录界面
+     * @param clientId 即 AppKey 
+     */
+    public void doSdkSwitchAccount(boolean isLandScape, boolean isBgTransparent, String clientId) { 
+    	Intent intent = getSwitchAccountIntent(isLandScape, isBgTransparent, clientId, true, false);
+    	Matrix.invokeActivity(this, intent, mLoginCallback);
+    }
+    
+    private Intent getSwitchAccountIntent(boolean isLandScape,
+			boolean isBgTransparent, String clientId, boolean isShowCloseIcon, boolean isSupportOffline) {
+        Intent intent = new Intent(this, ContainerActivity.class);
+        intent.putExtra(ProtocolKeys.FUNCTION_CODE, ProtocolConfigs.FUNC_CODE_SWITCH_ACCOUNT);
+
+        // 界面相关参数，360SDK界面是否以横屏显示。
+        intent.putExtra(ProtocolKeys.IS_SCREEN_ORIENTATION_LANDSCAPE, isLandScape);
+
+        // 界面相关参数，360SDK登录界面背景是否透明。
+        intent.putExtra(ProtocolKeys.IS_LOGIN_BG_TRANSPARENT, isBgTransparent);
+
+
+        // *** 以下非界面相关参数 ***
+
+        //是否显示关闭按钮
+        intent.putExtra(ProtocolKeys.IS_LOGIN_SHOW_CLOSE_ICON, isShowCloseIcon);
+
+        // Client Id 即 App Key。
+        if (!TextUtils.isEmpty(clientId))
+            intent.putExtra(ProtocolKeys.CLIENT_ID, clientId);
+
+        // 必需参数，登录回应模式：CODE模式，即返回Authorization Code的模式。
+        intent.putExtra(ProtocolKeys.RESPONSE_TYPE, RESPONSE_TYPE_CODE);
+
+        // 必需参数，手机的IMEI。
+        intent.putExtra(ProtocolKeys.APP_IMEI, getImei());
+
+        // 必需参数，360SDK版本号。
+        intent.putExtra(ProtocolKeys.INSDK_VERSION, Matrix.getVersion(this));
+
+        // 必需参数，App 版本号。
+        intent.putExtra(ProtocolKeys.APP_VERSION, Matrix.getAppVersionName(this));
+
+        // 必需参数，App Key。
+        intent.putExtra(ProtocolKeys.APP_KEY, Matrix.getAppKey(this));
+
+        // App 渠道号。
+        intent.putExtra(ProtocolKeys.APP_CHANNEL, Matrix.getChannel());
+
+        // 必需参数，使用360SDK的登录模块。
+        intent.putExtra(ProtocolKeys.FUNCTION_CODE, ProtocolConfigs.FUNC_CODE_LOGIN);
+        
+        // 必须参数，登录的渠道号，每个游戏会分配不同的字串，用于区分用户从哪里登录
+        intent.putExtra(ProtocolKeys.LOGIN_FROM, "360");
+        
+        // 可选参数，是否支持离线模式，默认值为false
+        intent.putExtra(ProtocolKeys.IS_SUPPORT_OFFLINE, isSupportOffline);
+
+        return intent;
+	}
+
+
+	/**
+    * 使用 360SDK 的切换账号接口
+    * @param isLandScape 是否横屏显示登录界面
+    * @param isBgTransparent 是否以透明背景显示登录界面
+    * @param clientId 即 AppKey */
+    protected void doSdkSwitchAccountSupportOffline(boolean isLandScape, boolean isBgTransparent, String clientId) {
+	    Intent intent = getSwitchAccountIntent(isLandScape, isBgTransparent, clientId, true, true);
+	    Matrix.invokeActivity(this, intent, mAccountSwitchSupportOfflineCB); 
+    }
+    
+    private IDispatcherCallback mAccountSwitchSupportOfflineCB = new IDispatcherCallback() {
+		
+		@Override
+		public void onFinished(String data) {
+			if (data == null) {
+				return;
+			}
+			Log.d(TAG, "mAccountSwitchSupportOfflineCB, data is " + data);
+			String authorizationCode = parseAuthorizationCode(data);
+			if (TextUtils.isEmpty(authorizationCode)) {
+				Toast.makeText(SdkUserBaseActivity.this, data, Toast.LENGTH_LONG).show();
+			} else {
+				// 能获取到 auth code
+				onGotAuthorizationCode(authorizationCode);
+			}
+		}
+	};
 }

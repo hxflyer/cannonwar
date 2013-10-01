@@ -10,7 +10,7 @@ import com.qihoo.gamecenter.sdk.protocols.ProtocolKeys;
 
 public class AddFriendTask {
 
-    public static void doAddFriendTask(Context context, String strToken, boolean isLandScape,String appkey, final AddFriendListener listener){
+    public static void doAddFriendTask(Context context, String strToken, boolean isLandScape, String appkey, final AddFriendListener listener){
         
         Intent intent = new Intent();
         // function code 必须参数，使用SDK接口添加好友
