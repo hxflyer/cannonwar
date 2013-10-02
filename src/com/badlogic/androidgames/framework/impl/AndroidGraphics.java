@@ -109,8 +109,6 @@ public class AndroidGraphics implements Graphics {
          *  srcRect.right = srcX + srcWidth - 1;
          *	srcRect.bottom = srcY + srcHeight - 1;
          */
-       
-        
         srcRect.right = srcX + srcWidth;
         srcRect.bottom = srcY + srcHeight;
         

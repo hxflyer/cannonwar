@@ -19,11 +19,11 @@ public class TankGame extends Game {
 		}
 		return loadScreen;
 	}
+	
 	public GameScreen getGameScreen() {
 		if(gameScreen==null){
 			gameScreen = new GameScreen(this);
 		}
-		
 		return gameScreen;
 	}
 	

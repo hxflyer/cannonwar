@@ -201,6 +201,7 @@ public abstract class Game extends SdkUserBaseActivity  implements
         }
 		this.doSdkCheckAutoLogin();
 	}
+	
 	@Override
     public void onGotAuthorizationCode(String authorizationCode) {
 		if (TextUtils.isEmpty(authorizationCode)) {
@@ -212,8 +213,6 @@ public abstract class Game extends SdkUserBaseActivity  implements
         }
     }
 
-	
-
 	@Override
 	public void onGotTokenInfo(TokenInfo tokenInfo) {
 		if (tokenInfo == null || TextUtils.isEmpty(tokenInfo.getAccessToken())) {
@@ -221,7 +220,7 @@ public abstract class Game extends SdkUserBaseActivity  implements
             if(mProgress!=null){
                 ProgressUtil.dismiss(mProgress);
                 mProgress =null;
-                }
+            }
         } else {
             // 保存TokenInfo
             mTokenInfo = tokenInfo;
@@ -261,9 +260,7 @@ public abstract class Game extends SdkUserBaseActivity  implements
         } else {
             Toast.makeText(this, "登录失败，请再试一次", Toast.LENGTH_LONG).show();
         }
-        
 	}
-	
 	
     @Override
     public void onAddFriendTaskResult(String strResult) {
@@ -275,14 +272,15 @@ public abstract class Game extends SdkUserBaseActivity  implements
 		
 		this.runOnUiThread(new Runnable() {
 			public void run() {
-				 generateScoreShareImg();
-				doSdkSinaWeiboShare(mQihooUserInfo, mTokenInfo, true);
-				mProgress = ProgressUtil.show(Game.instance, "", "连接新浪微博");
+					generateScoreShareImg();
+					doSdkSinaWeiboShare(mQihooUserInfo, mTokenInfo, true);
+					mProgress = ProgressUtil.show(Game.instance, "", "连接新浪微博");
 			    }
 			});
 		
 		//doSdkGetMessageList(mQihooUserInfo, mTokenInfo);
 	}
+	
 	public void generateScoreShareImg() {
 		if(Assets.shareScoreImg==null){
 			Assets.shareScoreImg = (AndroidPixmap)Game.instance.getGraphics().newPixmap("shareWeibo.jpg", PixmapFormat.RGB565);
@@ -314,22 +312,20 @@ public abstract class Game extends SdkUserBaseActivity  implements
 			fOut.close();
 		} catch (Exception e) {
 			e.printStackTrace();
-		}       
-        
+		}
         Log.d("tank", "file generate done");
-
     }
-	
 	
 	public void showFriendsRank(){
 		doSdkDisplayGameFriendRank(mQihooUserInfo, mTokenInfo, true);
 	}
+	
 	public void showInviteFriendPopup(){
 		this.runOnUiThread(new Runnable() {
 			public void run() {
 				doSdkInviteFriendBySdk(mQihooUserInfo,mTokenInfo,true);
-			    }
-			});
+		    }
+		});
 	}
 	
 }

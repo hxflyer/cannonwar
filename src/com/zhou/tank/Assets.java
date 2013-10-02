@@ -1,21 +1,10 @@
 package com.zhou.tank;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Bitmap.Config;
-import android.util.Log;
-
 import com.badlogic.androidgames.framework.Game;
 import com.badlogic.androidgames.framework.Graphics;
+import com.badlogic.androidgames.framework.Graphics.PixmapFormat;
 import com.badlogic.androidgames.framework.Pixmap;
 import com.badlogic.androidgames.framework.Sound;
-import com.badlogic.androidgames.framework.Graphics.PixmapFormat;
 import com.badlogic.androidgames.framework.impl.AndroidPixmap;
 
 public class Assets {
@@ -68,7 +57,6 @@ public class Assets {
 	public static Sound explodeSound;
 	public static Sound winSound;
 	
-	
 	public static void load(Game game){
 		Graphics g = game.getGraphics();
 		//bg
@@ -119,6 +107,7 @@ public class Assets {
 		
 		game.setScreen(new MainMenuScreen(game));
 	}
+	
 	public static void unload(){
 		menuBackground.dispose();
 		gameBackground.dispose();

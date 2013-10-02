@@ -1,10 +1,6 @@
 package com.zhou.tank;
 
-import android.util.Log;
-
 import com.badlogic.androidgames.framework.Game;
-import com.badlogic.androidgames.framework.Graphics;
-import com.badlogic.androidgames.framework.Graphics.PixmapFormat;
 import com.badlogic.androidgames.framework.Screen;
 
 public class LoadingScreen extends Screen {

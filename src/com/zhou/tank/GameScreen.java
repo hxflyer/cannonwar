@@ -1,6 +1,5 @@
 package com.zhou.tank;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.Rect;
@@ -77,7 +76,6 @@ public class GameScreen extends Screen {
 			return;
 		}
 		world.update(deltaTime);
-		
 		
 		// if gameover ,the tank cannot move;
 		if(world.isShowSuccessLabel){
@@ -167,7 +165,6 @@ public class GameScreen extends Screen {
 	public void present(float deltaTime) {
 		Graphics g = game.getGraphics();
 		drawWorld(g, deltaTime);
-		
 	}
 
 	public void drawWorld(Graphics g, float deltaTime) {
@@ -181,8 +178,6 @@ public class GameScreen extends Screen {
 		
 		g.drawPixmap(Assets.level, 20, 75);
 		g.drawText("" + Setting.level, 65, 100, Color.RED, 22);
-		
-		
 		
 		g.drawPixmap(Assets.enemy, 20, 125,0,0,30,30);
 		g.drawText("" + (world.totalEnemyNum() - world.createTankNum), 65, 150, Color.RED, 22);

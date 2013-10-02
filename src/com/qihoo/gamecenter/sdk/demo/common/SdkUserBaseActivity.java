@@ -7,6 +7,8 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Log;
@@ -58,7 +60,11 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
      * @param clientId 即AppKey
      */
     public void doSdkLogin(boolean isLandScape, boolean isBgTransparent, String clientId) {
-        doSdkLogin(isLandScape,isBgTransparent,clientId,true);
+        if(isConnect(this)) {
+        	doSdkLogin(isLandScape, isBgTransparent, clientId, true);
+        } else {
+        	doSdkLoginSupportOffline(isLandScape, isBgTransparent, clientId, true);
+        }
     }
     
 
@@ -73,7 +79,7 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
      */
     public void doSdkLogin(boolean isLandScape, boolean isBgTransparent, String clientId,boolean isShowCloseIcon) {
         mIsInOffline = false;
-        Intent intent = getLoginIntent(isLandScape, isBgTransparent, clientId,isShowCloseIcon, false);
+        Intent intent = getLoginIntent(isLandScape, isBgTransparent, clientId, isShowCloseIcon, false);
         Matrix.invokeActivity(this, intent, mLoginCallback);
     }
     
@@ -197,7 +203,8 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
 					mTokenInfo = new TokenInfo();
 					mQihooUserInfo = new QihooUserInfo();
 					/*
-					 * 离线模式下,直接调用 addfriend 接口, 可以总该接口返回的数据中尝试获叏离线登录用户的昵称和 QID
+					 * 离线模式下,直接调用 addfriend 接口, 
+					 * 可以从该接口返回的数据中尝试获取离线登录用户的昵称和 QID
 					 */
 					AddFriendTask.doAddFriendTask(SdkUserBaseActivity.this,
 							null, false, Game.APPKEY, new AddFriendListener() {
@@ -563,7 +570,7 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
             @Override
             public void onFinished(String data) {
                 Toast.makeText(SdkUserBaseActivity.this, "账户已退出", Toast.LENGTH_SHORT).show();
-                System.out.println(data);
+                Log.i(TAG, data);
             }
         });
     }
@@ -718,23 +725,27 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
     }
     
     public void doSdkCheckAutoLogin() {
-        Intent intent = getCheckAutoLoginIntent();
-        Matrix.execute(this, intent, new IDispatcherCallback() {
-            
-            @Override
-            public void onFinished(String data) {
-            	try {
-					JSONObject jsonObj = new JSONObject(data);
-					Boolean isAutoLoginOk = jsonObj.getBoolean("autologin");
-					if(isAutoLoginOk){
-						doSdkLogin(true, false, Game.APPKEY);
+    	if (isConnect(this)) {
+			Intent intent = getCheckAutoLoginIntent();
+			Matrix.execute(this, intent, new IDispatcherCallback() {
+				
+				@Override
+				public void onFinished(String data) {
+					try {
+						JSONObject jsonObj = new JSONObject(data);
+						Boolean isAutoLoginOk = jsonObj.getBoolean("autologin");
+						if(isAutoLoginOk){
+							doSdkLogin(true, false, Game.APPKEY);
+						}
+					} catch (JSONException e) {
+						e.printStackTrace();
 					}
-				} catch (JSONException e) {
-					e.printStackTrace();
+					
 				}
-                
-            }
-        });
+			});
+		} else {
+			doSdkLoginSupportOffline(true, false, Game.APPKEY, true);
+		}
     }
     
     private Intent getCheckAutoLoginIntent() {
@@ -905,4 +916,25 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
 			}
 		}
 	};
+	
+	public boolean isConnect(Context context) {
+		// 获取手机所有连接管理对象（包括对wi-fi,net等连接的管理）
+		try {
+			ConnectivityManager connectivity = (ConnectivityManager) context
+					.getSystemService(Context.CONNECTIVITY_SERVICE);
+			if (connectivity != null) {
+				// 获取网络连接管理的对象
+				NetworkInfo info = connectivity.getActiveNetworkInfo();
+				if (info != null && info.isConnected()) {
+					// 判断当前网络是否已经连接
+					if (info.getState() == NetworkInfo.State.CONNECTED) {
+						return true;
+					}
+				}
+			}
+		} catch (Exception e) {
+			Log.e(TAG, e.toString());
+		}
+		return false;
+	}
 }
