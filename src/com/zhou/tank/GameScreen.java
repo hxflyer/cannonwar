@@ -30,6 +30,7 @@ public class GameScreen extends Screen {
 			public int[][] loadMap(int level) {
 				return MapFactory.createMap(fileIo, level);
 			}
+			
 		};
 		world = new World(worldListener, game);
 		reset();
@@ -90,55 +91,53 @@ public class GameScreen extends Screen {
 			if (world.tickTimes[6]>1.5 && game.getInput().isTouchDown(0)) {
 				int x = game.getInput().getTouchX(0);
 				int y = game.getInput().getTouchY(0);
-				if(x>250 && x<550){
-
-					if(y>150){
-						if(y<240){
-							world.restart();
-							Log.d("tank","btn replay");
-						}else if(y<320){
-							Log.d("tank","btn share");
-							if(game.isLoggedIn){
-								game.showShareScorePopup();
-							}else{
-								game.loginNextIntent = "shareScore";
-								game.doSdkLogin(true, false, Game.APPKEY);
-							}
-							frozeTime = 30;
-						}else if(y<380){
-							Log.d("tank","btn invite");
-							if(game.isLoggedIn){
-								game.showInviteFriendPopup();
-							}else{
-								game.loginNextIntent = "inviteFriend";
-								game.doSdkLogin(true, false, Game.APPKEY);
-							}
-							frozeTime = 30;
-						}else if(y<440){
-							Log.d("tank","btn check list");
-							if(game.isLoggedIn){
-								game.showFriendsRank();
-							}else{
-								game.loginNextIntent = "showList";
-								game.doSdkLogin(true, false, Game.APPKEY);
-							}
-							frozeTime = 30;
+				if(x>250 && x<550 && y>150){
+					if(y<240){
+						world.restart();
+						Log.d("tank","btn replay");
+					}else if(y<320){
+						Log.d("tank","btn share");
+						if(game.isLoggedIn){
+							game.showShareScorePopup();
+						}else{
+							game.loginNextIntent = "shareScore";
+							game.doSdkLogin(true, false, Game.APPKEY);
 						}
+						frozeTime = 30;
+					}else if(y<380){
+						Log.d("tank","btn invite");
+						if(game.isLoggedIn){
+							game.showInviteFriendPopup();
+						}else{
+							game.loginNextIntent = "inviteFriend";
+							game.doSdkLogin(true, false, Game.APPKEY);
+						}
+						frozeTime = 30;
+					}else if(y<440){
+						Log.d("tank","btn check list");
+						if(game.isLoggedIn){
+							game.showFriendsRank();
+						}else{
+							game.loginNextIntent = "showList";
+							game.doSdkLogin(true, false, Game.APPKEY);
+						}
+						frozeTime = 30;
 					}
 				}
 				//world.restart();
 			}
 		}else if (!world.isGameOver) {
-			
 			if (game.getInput().isTouchDown(0)) {
 				int x = game.getInput().getTouchX(0);
 				int y = game.getInput().getTouchY(0);
 				if (x < 250 && y > 220) {
+					// 方向键区域
 					world.player.direction = pressInwhichRect(105, 370, x, y);
 					world.player.move(deltaTime);
 				} else if( x < 320 && x > 160 && y < 80){
 					//game.setScreen(new MainMenuScreen(game));
-				}else if (x > WorldRect.right && y>300) {
+				} else if (x > WorldRect.right && y>300) {
+					// 射击区域
 					if(world.player.isLive){
 						world.player.shoot(deltaTime);
 					}
@@ -475,6 +474,14 @@ public class GameScreen extends Screen {
 	}
 
 	// (160 ,320)
+	/**
+	 * 0-UP;1-RIGHT;2-DOWN;3-LEFT
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @return
+	 */
 	public int pressInwhichRect(int x1, int y1, int x2, int y2) {
 		if (Math.abs(x2 - x1) > Math.abs(y2 - y1)) {
 			if (x2 - x1 > 0) {

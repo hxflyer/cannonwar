@@ -45,7 +45,6 @@ public class Player extends Tank {
 
 	@Override
 	public void changeType(int type) {
-		// TODO Auto-generated method stub
 		if (type < 0 || type > 4) {
 			throw new RuntimeException(
 					"the tank_type of player is now right in changeType()");
@@ -75,12 +74,10 @@ public class Player extends Tank {
 
 	@Override
 	public void changeDirection(float deltaTime) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public void setGood() {
-		// TODO Auto-generated method stub
 		this.isGood = true;
 		for(int i =0;i<bullets.size();i++){
 			bullets.get(i).initBullet(x + Setting.Tank_Size / 2 - Setting.Bullet_Size / 2,
@@ -105,7 +102,12 @@ public class Player extends Tank {
 		coolDownCount = 10;
 	}
 	
-	public void eatBonus(World world ,Bonus bonus){
+	/**
+	 * 玩家吃奖励
+	 * @param world
+	 * @param bonus
+	 */
+	public void eatBonus(World world, Bonus bonus){
 		if(!bonus.isLive){
 			return;
 		}
@@ -135,7 +137,7 @@ public class Player extends Tank {
 				hasHat = true;
 				hasHatTime = 8;
 				bonus.tickTime = 20;
-				if(starNum < 4 && tank_type!=3){
+				if(starNum < 4 && tank_type != 3){
 					changeType(tank_type + 1);
 				}
 				break;

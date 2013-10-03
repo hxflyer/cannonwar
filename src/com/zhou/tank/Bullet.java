@@ -1,18 +1,29 @@
 package com.zhou.tank;
 
-import android.util.Log;
-
+/**
+ * 子弹
+ * @author admin
+ * @date 2013-10-3-上午12:10:47
+ */
 public abstract class Bullet extends ObjectCubo {
 	
 	public static final int[] player_bullet_type = { 0 , 1 , 2 , 3};
 	public static final int[] player_bullet_strength = { 1 , 1 , 2 , 4};
-	public static final int[] player_bullet_speed ={ Setting.Bullet_Fast_Speed , Setting.Bullet_VeryFast_Speed ,
-													 Setting.Bullet_VeryFast_Speed , Setting.Bullet_SuperFast_Speed };
+	public static final int[] player_bullet_speed = { 
+		Setting.Bullet_Fast_Speed, 
+		Setting.Bullet_VeryFast_Speed,
+		Setting.Bullet_VeryFast_Speed, 
+		Setting.Bullet_SuperFast_Speed
+	};
 	
-	public static final int[] enemy_bullet_type = {0 , 1 , 2 , 3 };
-	public static final int[] enemy_bullet_strength = {1 , 1 , 2 , 2};//stack the life of tank;
-	public static final int[] enemy_bullet_speed = {Setting.Bullet_Mode_Speed , Setting.Bullet_Mode_Speed , 
-									   Setting.Bullet_Fast_Speed , Setting.Bullet_SuperFast_Speed };
+	public static final int[] enemy_bullet_type = {0, 1, 2, 3};
+	public static final int[] enemy_bullet_strength = {1, 1, 2, 2};//stack the life of tank;
+	public static final int[] enemy_bullet_speed = {
+		Setting.Bullet_Mode_Speed,
+		Setting.Bullet_Mode_Speed,
+		Setting.Bullet_Fast_Speed,
+		Setting.Bullet_SuperFast_Speed 
+	};
 	
 	public boolean isGood;
 	public int direction;
@@ -64,7 +75,6 @@ public abstract class Bullet extends ObjectCubo {
 		}
 		bulletIsLive(x1 , y1);
 		if(isLive){
-			
 			x = x1;
 			y = y1;
 		}

@@ -2,12 +2,14 @@ package com.zhou.tank;
 
 import java.util.Random;
 
-import android.provider.UserDictionary.Words;
-import android.util.Log;
-
 import com.badlogic.androidgames.framework.Game;
 import com.zhou.tank.ObjectCubo.MapListener;
 
+/**
+ * 领域
+ * @author admin
+ * @date 2013-10-3-上午11:17:22
+ */
 public class World implements MapListener {
 
 	public interface WorldListener {
@@ -92,7 +94,6 @@ public class World implements MapListener {
 	
 	public boolean isPaused = false;
 	public void update(float deltaTime) {
-		
 		for (int i = 0; i < enemyTanks.length; i++) {
 			enemyTanks[i].update(deltaTime);
 		}
@@ -124,7 +125,6 @@ public class World implements MapListener {
 			}
 			isShowFailLabel = true;
 		}
-		
 	}
 	
 	public void restart(){
@@ -158,6 +158,11 @@ public class World implements MapListener {
 		homeshow = 0;
 		homeIsFeTime = 0;
 	}
+	
+	/**
+	 * 更新敌人
+	 * @param deltaTime
+	 */
 	public void updateEnemy(float deltaTime) {
 		if (createTankNum < totalEnemyNum()) {
 			for (int i = 0; i < enemyTanks.length; i++) {
@@ -180,6 +185,10 @@ public class World implements MapListener {
 	public int totalEnemyNum(){
 		return(3+Setting.level);
 	}
+	/**
+	 * 更新玩家
+	 * @param deltaTime
+	 */
 	public void updatePlayer(float deltaTime) {
 		if (playerLife >= 0) {
 			if (player.isLive == false) {
@@ -210,6 +219,10 @@ public class World implements MapListener {
 		map[15][8]  = 1;
 	}
 
+	/**
+	 * 更新玩家是否有奖励
+	 * @param deltaTime
+	 */
 	public void updatePlayerHasBonus(float deltaTime) {
 		if (player.eatBomb) {
 			for(int i = 0 ;i < enemyTanks.length ;i++ ){
@@ -241,7 +254,6 @@ public class World implements MapListener {
 				player.hasSpade = false;
 			}
 		}
-		
 		if (player.hasHat) {
 			player.hasHatTime += deltaTime;
 			if (player.hasHatTime > 10) {
@@ -251,13 +263,16 @@ public class World implements MapListener {
 		}
 	}
 
+	/**
+	 * 检查子弹射击坦克（敌人的和玩家的）
+	 */
 	public void checkBulletShotTank() {
 		for (int i = 0; i < enemyTanks.length; i++) {
 			Enemy enemy = enemyTanks[i];
 			for(int j=0;j<player.bullets.size();j++){
 				PlayerBullet b = (PlayerBullet)player.bullets.get(j);
+				// 子弹和敌人坦克
 				if (b.isLive && enemy.isLive) {
-	
 					if (enemy.getRect().intersect(b.getRect())) {
 						player.bullets.remove(j);
 						j--;
@@ -279,8 +294,8 @@ public class World implements MapListener {
 						levelScore += (Setting.level-1)*20+200;
 					}
 				}
+				// bullet and bullet（子弹和子弹）
 				if (enemy.bullet.isLive) {
-					// bullet and bullet
 					if (b.isLive) {
 						if (enemy.bullet.getRect().intersect(b.getRect())) {
 							b.isLive = false;
@@ -289,8 +304,9 @@ public class World implements MapListener {
 					}
 				}
 			}
+			// 敌人的子弹和玩家
+			// bullet and player
 			if (enemy.bullet.isLive) {
-				// bullet and player
 				if (player.isLive && player.getRect().intersect(enemy.bullet.getRect())) {
 					enemy.bullet.isLive = false;
 					if (!player.hasHat) {
@@ -316,43 +332,39 @@ public class World implements MapListener {
 					}
 				}
 			}
-			
 		}
 	}
 
-	public void createBonus(){
-		
-		
-			if(Setting.soundEnabled){
-				Assets.show_bonus.play(1);
+	public void createBonus() {
+		if (Setting.soundEnabled) {
+			Assets.show_bonus.play(1);
+		}
+		int firstDeatBonusId = bonus.length;
+		for (int i = 0; i < bonus.length; i++) {
+			if (bonus[i].isLive == false) {
+				firstDeatBonusId = i;
+				break;
 			}
-			int firstDeatBonusId = bonus.length;
-			for(int i=0;i<bonus.length;i++){
-				if (bonus[i].isLive==false){
-					firstDeatBonusId = i;
-					break;
-				}
-			}
-			if(firstDeatBonusId<bonus.length){
+		}
+		if (firstDeatBonusId < bonus.length) {
 			bonus[firstDeatBonusId].isLive = true;
 			bonus[firstDeatBonusId].tickTime = 0;
 			bonus[firstDeatBonusId].show = 0;
 			int bonusType = new Random().nextInt(5);
 			bonus[firstDeatBonusId].bonus_type = bonusType;
-			bonus[firstDeatBonusId].x = new Random()
-					.nextInt(WORLD_WIDTH - Setting.Bouns_Size - 1);
-			bonus[firstDeatBonusId].y = new Random()
-					.nextInt(WORLD_HEIGHT - Setting.Bouns_Size * 2);
-			}
-		
+			bonus[firstDeatBonusId].x = new Random().nextInt(WORLD_WIDTH
+					- Setting.Bouns_Size - 1);
+			bonus[firstDeatBonusId].y = new Random().nextInt(WORLD_HEIGHT
+					- Setting.Bouns_Size * 2);
+		}
 	}
 	
 	@Override
 	public boolean checkTank(Tank tank, int x, int y) {
 		int item1 = map[y / Setting.Item_Size][x / Setting.Item_Size];
-		if (item1 == 0 || item1 == 3)
+		if (item1 == 0 || item1 == 3) {
 			return true;
-		
+		}
 		return false;
 	}		
 

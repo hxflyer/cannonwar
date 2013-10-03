@@ -1,6 +1,10 @@
 package com.zhou.tank;
 
-
+/**
+ * 敌人
+ * @author admin
+ * @date 2013-10-3-上午12:25:30
+ */
 public class Enemy extends Tank {
 		
 	public Enemy(MapListener mapListener) {
@@ -10,7 +14,6 @@ public class Enemy extends Tank {
 
 	@Override
 	public void changeType(int type) {
-		
 		if(type < 0 || type > 8){
 			throw new RuntimeException("the tank_type of player is now right in changeType()");
 		}
@@ -32,7 +35,6 @@ public class Enemy extends Tank {
 
 	@Override
 	public void setGood() {
-		
 		this.isGood = false;
 		bullet.initBullet(x + Setting.Tank_Size/2 - Setting.Bullet_Size/2, 
 				  y + Setting.Tank_Size/2 - Setting.Bullet_Size/2, direction);

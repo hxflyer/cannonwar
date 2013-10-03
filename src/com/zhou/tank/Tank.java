@@ -3,12 +3,14 @@ package com.zhou.tank;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * 坦克
+ * @author admin
+ * @date 2013-10-3-上午12:25:41
+ */
 public abstract class Tank extends ObjectCubo {
-
-	public static final int[] player_type = { 0, 1, 2, 3 };// eat no star ,one
-															// star,two
-															// stars,three stars
-															// or one pistol
+	// eat no star, one star,two stars, three stars or one pistol
+	public static final int[] player_type = { 0, 1, 2, 3 };
 	public static final int[] player_lifes = { 1, 2, 2, 2 };
 	public static final int[] player_speed = { Setting.Tank_Mode_Speed,
 			Setting.Tank_Fase_Speed, Setting.Tank_Very_Fase_Speed,
@@ -82,6 +84,10 @@ public abstract class Tank extends ObjectCubo {
 		bullet.update(deltaTime);
 	}
 
+	/**
+	 * 坦克移动
+	 * @param deltaTime
+	 */
 	public void move(float deltaTime) {
 		if(!isLive)
 			return;
@@ -105,27 +111,28 @@ public abstract class Tank extends ObjectCubo {
 		}
 		if (x1 < 0 || x1 >= World.WORLD_WIDTH - Setting.Tank_Size
 				|| y1 >= World.WORLD_HEIGHT - Setting.Tank_Size || y1 < 0) {
-			if (!isGood)
-				changeDirection(deltaTime);			
+			if (!isGood) {
+				changeDirection(deltaTime);
+			}
 			return;
 		}
 
-		notIntroblue = mapListener.checkTank(this , x, y)
-				&& mapListener.checkTank(this , x + Setting.Tank_Size, y)
-				&& mapListener.checkTank(this , x, y + Setting.Tank_Size)
-				&& mapListener.checkTank(this , x + Setting.Tank_Size, y
-						+ Setting.Tank_Size) && mapListener.checkTankP(this , x , y);
+		notIntroblue = mapListener.checkTank(this, x, y)
+				&& mapListener.checkTank(this, x + Setting.Tank_Size, y)
+				&& mapListener.checkTank(this, x, y + Setting.Tank_Size)
+				&& mapListener.checkTank(this, x + Setting.Tank_Size, y + Setting.Tank_Size) 
+				&& mapListener.checkTankP(this, x, y);
 
 		if (!notIntroblue) {
 			x = x1;
 			y = y1;
 			return;
 		} else {
-			isPass = mapListener.checkTank(this , x1, y1)
-					&& mapListener.checkTank(this ,x1 + Setting.Tank_Size, y1)
-					&& mapListener.checkTank(this , x1, y1 + Setting.Tank_Size)
-					&& mapListener.checkTank(this ,x1 + Setting.Tank_Size, y1
-							+ Setting.Tank_Size) && mapListener.checkTankP(this ,x1 ,y1);
+			isPass = mapListener.checkTank(this, x1, y1)
+					&& mapListener.checkTank(this, x1 + Setting.Tank_Size, y1)
+					&& mapListener.checkTank(this, x1, y1 + Setting.Tank_Size)
+					&& mapListener.checkTank(this, x1 + Setting.Tank_Size, y1 + Setting.Tank_Size) 
+					&& mapListener.checkTankP(this, x1, y1);
 			if (!isPass) {
 				if (!isGood)
 					changeDirection(deltaTime);

@@ -2,6 +2,11 @@ package com.zhou.tank;
 
 import android.util.Log;
 
+/**
+ * 玩家字典
+ * @author admin
+ * @date 2013-10-3-上午12:11:32
+ */
 public class PlayerBullet extends Bullet {
 
 	public PlayerBullet(MapListener mapListener) {
@@ -10,7 +15,6 @@ public class PlayerBullet extends Bullet {
 
 	@Override
 	public void changeType(int type) {
-		// TODO Auto-generated method stub
 		this.bullet_type = type;
 		this.bullet_speed = Bullet.player_bullet_speed[type];
 		this.bullet_strength = Bullet.player_bullet_strength[type];
@@ -19,7 +23,6 @@ public class PlayerBullet extends Bullet {
 
 	@Override
 	public void setGood() {
-		// TODO Auto-generated method stub
 		this.isGood = true;
 	}
 	

@@ -2,6 +2,11 @@ package com.zhou.tank;
 
 import android.graphics.Rect;
 
+/**
+ * 物体
+ * @author admin
+ * @date 2013-10-3-上午12:10:57
+ */
 public abstract class ObjectCubo {
 	/**
 	 * object has position x, y and width,height
