@@ -166,6 +166,11 @@ public class GameScreen extends Screen {
 		drawWorld(g, deltaTime);
 	}
 
+	/**
+	 * 画领域
+	 * @param g
+	 * @param deltaTime
+	 */
 	public void drawWorld(Graphics g, float deltaTime) {
 		// need to fresh the
 		g.clear(0);
@@ -187,7 +192,6 @@ public class GameScreen extends Screen {
 		}else{
 			g.drawText("0", 65, 200, Color.RED, 22);
 		}
-		
 		drawMap(g);
 		drawEnemy(g);
 		drawPlayer(g);
@@ -379,6 +383,7 @@ public class GameScreen extends Screen {
 	}
 
 	private void drawEnemy(Graphics g) {
+		// 领域内敌人坦克的数量
 		for (int i = 0; i < world.enemyTanks.length; i++) {
 			if (world.enemyTanks[i].isLive) {
 				switch (world.enemyTanks[i].tank_type) {
@@ -421,8 +426,14 @@ public class GameScreen extends Screen {
 		}
 	}
 
+	/**
+	 * 画地图
+	 * @param g
+	 */
 	private void drawMap(Graphics g) {
+		// 行
 		for (int i = 0; i < World.World_Height; i++) {
+			// 列
 			for (int j = 0; j < World.World_Width; j++) {
 				int title = world.map[i][j];
 				switch (title) {
@@ -444,7 +455,7 @@ public class GameScreen extends Screen {
 						g.drawPixmap(Assets.terrain, WorldRect.left + Setting.Item_Size * j, Setting.Item_Size * i,
 								Setting.Item_Size * 4, 0, Setting.Item_Size, Setting.Item_Size);
 					}
-					break;				
+					break;
 				case 6:
 					g.drawPixmap(Assets.terrain, WorldRect.left + Setting.Item_Size * j, Setting.Item_Size * i,
 							Setting.Item_Size * 5, 0, Setting.Item_Size, Setting.Item_Size);
