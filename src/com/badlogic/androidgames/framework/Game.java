@@ -58,8 +58,8 @@ public abstract class Game extends SdkUserBaseActivity  implements
     public WakeLock wakeLock;
     public SharedPreferences sp;
     
-   public static Game instance;
-   LinearLayout basicView;
+    public static Game instance;
+    LinearLayout basicView;
    
     @Override
     public void onCreate(Bundle savedInstanceState) {

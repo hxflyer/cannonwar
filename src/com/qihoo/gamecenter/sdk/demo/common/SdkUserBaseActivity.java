@@ -15,6 +15,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.badlogic.androidgames.framework.Game;
+import com.badlogic.androidgames.framework.Screen;
 import com.hx.cannonwar.TankGame;
 import com.qihoo.gamecenter.sdk.buildin.Matrix;
 import com.qihoo.gamecenter.sdk.buildin.activity.ContainerActivity;
@@ -26,6 +27,7 @@ import com.qihoo.gamecenter.sdk.demo.appserver.TokenInfo;
 import com.qihoo.gamecenter.sdk.demo.utils.ProgressUtil;
 import com.qihoo.gamecenter.sdk.protocols.ProtocolConfigs;
 import com.qihoo.gamecenter.sdk.protocols.ProtocolKeys;
+import com.zhou.tank.GameScreen;
 
 /**
  * SdkUserBaseActivity这个基类，处理请求360SDK的登录和支付接口。
@@ -222,6 +224,9 @@ public abstract class SdkUserBaseActivity extends Activity implements SdkLoginLi
 								String nick = jodata.optString("nick", "");
 								mQihooUserInfo.setId(qid);
 								mQihooUserInfo.setNick(nick);
+								Log.i(TAG, "qid:"+qid+",nick:"+nick);
+								Toast.makeText(SdkUserBaseActivity.this, 
+										"qid:"+qid+",nick:"+nick, Toast.LENGTH_LONG).show();
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
