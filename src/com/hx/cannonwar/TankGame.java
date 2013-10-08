@@ -4,6 +4,7 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.badlogic.androidgames.framework.Game;
+import com.umeng.analytics.MobclickAgent;
 import com.zhou.tank.GameScreen;
 import com.zhou.tank.LoadingScreen;
 
@@ -50,6 +51,18 @@ public class TankGame extends Game {
 	@Override
 	public void onClick(View arg0) {
 		
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	
+	@Override
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
 	}
 	
 }

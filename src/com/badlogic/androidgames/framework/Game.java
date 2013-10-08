@@ -43,6 +43,7 @@ import com.qihoo.gamecenter.sdk.demo.appserver.TokenInfoListener;
 import com.qihoo.gamecenter.sdk.demo.appserver.TokenInfoTask;
 import com.qihoo.gamecenter.sdk.demo.common.SdkUserBaseActivity;
 import com.qihoo.gamecenter.sdk.demo.utils.ProgressUtil;
+import com.umeng.analytics.MobclickAgent;
 import com.zhou.tank.Assets;
 import com.zhou.tank.GameScreen;
 
@@ -107,6 +108,7 @@ public abstract class Game extends SdkUserBaseActivity  implements
         wakeLock.acquire();
         screen.resume();
         renderView.resume();
+        MobclickAgent.onResume(this);
     }
 
     @Override
@@ -119,8 +121,10 @@ public abstract class Game extends SdkUserBaseActivity  implements
             ProgressUtil.dismiss(mProgress);
             mProgress =null;
             }
-        if (isFinishing())
+        if (isFinishing()) {
             screen.dispose();
+        }
+        MobclickAgent.onPause(this);
     }
 
     public Input getInput() {
